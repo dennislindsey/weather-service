@@ -23,7 +23,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \Route::pattern('zipCode', '\d{5}');
 
         parent::boot();
     }

@@ -10,6 +10,12 @@ use App\Contracts\WeatherServiceContract;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
+/**
+ * Class OpenWeatherService
+ *
+ * @see https://openweathermap.org/current
+ * @package App\Services\Weather
+ */
 class OpenWeatherService implements WeatherServiceContract
 {
     /** @var null|string */
@@ -78,10 +84,10 @@ class OpenWeatherService implements WeatherServiceContract
      */
     public function wind(): array
     {
-        return data_get($this->weather(), 'wind', [
+        return array_replace([
             'speed' => null,
             'deg'   => null,
             'gust'  => null,
-        ]);
+        ], data_get($this->weather(), 'wind', []));
     }
 }

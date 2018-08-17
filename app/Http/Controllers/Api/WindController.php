@@ -8,7 +8,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Contracts\WeatherServiceContract;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\WindShowRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
@@ -34,13 +34,16 @@ class WindController extends Controller
     }
 
     /**
-     * @param WindShowRequest $request
+     * Get wind weather for a given zip code
+     *
+     * @param string $zipCode
      * @return Response
      */
-    public function show(WindShowRequest $request): Response
+    public function show(string $zipCode): Response
     {
+        /** @var array $wind */
         $wind = $this->weatherService
-            ->forZip($request->input('zipCode'))
+            ->forZip($zipCode)
             ->wind();
 
         return new Response($wind);

@@ -65,6 +65,10 @@ class OpenWeatherCacheService implements WeatherServiceContract
      */
     public function wind(): array
     {
-        return data_get($this->weather(), 'wind');
+        return array_replace([
+            'speed' => null,
+            'deg'   => null,
+            'gust'  => null,
+        ], data_get($this->weather(), 'wind', []));
     }
 }

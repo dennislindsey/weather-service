@@ -30,7 +30,7 @@ class ClearWeatherCacheCommand extends Command
         $zipCode = $this->argument('zipCode');
 
         if (!preg_match('/\d{5}/', $zipCode)) {
-            $this->error('Invalid zip code');
+            $this->error('Invalid zip code, must be 5 consecutive digits');
 
             return;
         }

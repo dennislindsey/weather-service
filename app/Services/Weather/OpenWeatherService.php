@@ -13,7 +13,7 @@ use GuzzleHttp\Psr7\Response;
 /**
  * Class OpenWeatherService
  *
- * @see https://openweathermap.org/current
+ * @see     https://openweathermap.org/current
  * @package App\Services\Weather
  */
 class OpenWeatherService implements WeatherServiceContract
@@ -26,6 +26,8 @@ class OpenWeatherService implements WeatherServiceContract
 
     /**
      * OpenWeatherService constructor.
+     *
+     * @throws OpenWeatherException
      */
     public function __construct()
     {
@@ -33,7 +35,9 @@ class OpenWeatherService implements WeatherServiceContract
 
         $this->apiKey = array_get($weatherConfig, 'apiKey');
 
-        throw_if(is_null($this->apiKey), new \Exception);
+        if (is_null($this->apiKey)) {
+            throw new OpenWeatherException("openweathermaps.org API key is null, see config/weather.php");
+        }
     }
 
     /**
@@ -63,16 +67,19 @@ class OpenWeatherService implements WeatherServiceContract
      * Gets weather data for the context zip code
      *
      * @return array
+     * @throws OpenWeatherException
      */
     public function weather(): array
     {
-        throw_if(is_null($this->zipCode), new \Exception);
+        throw_if(is_null($this->zipCode), new OpenWeatherException("Zip code cannot be null"));
 
         /** @var Response $apiResponse */
         $apiResponse = (new Client)
             ->request('GET', "api.openweathermap.org/data/2.5/weather?zip={$this->zipCode}&APPID={$this->apiKey}");
 
-        throw_if($apiResponse->getStatusCode() != "200", new \Exception);
+        if ($apiResponse->getStatusCode() != "200") {
+            throw new OpenWeatherException("Bad response from openweathermap.org", $apiResponse->getStatusCode());
+        }
 
         return json_decode($apiResponse->getBody(), true) ?? [];
     }

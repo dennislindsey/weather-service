@@ -1,4 +1,4 @@
 <?php
 
-\Route::get('/wind/{zipCode}', 'Api\WindController@show')
+\Route::get('/v1/wind/{zipCode}', 'Api\WindController@show')
     ->name('api.wind.show');

@@ -23,7 +23,7 @@ The business wants a web service developed that returns current weather informat
 * Cache the resource for 15 minutes to avoid expensive calls to the OpenWeatherMap API.
 * Provide a CLI command that will bust the cache if needed.
 * Response fields should include:
-    * o Wind Speed
+    * Wind Speed
     * Wind Direction
 
 #### Unit Testing Requirements

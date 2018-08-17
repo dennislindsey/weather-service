@@ -47,5 +47,5 @@ The business wants a web service developed that returns current weather informat
     ```
 1. The wind resource should now be accessible by running a curl command:
     ```
-    $ curl -x http://localhost:8000/api/v1/wind/89101
+    $ curl http://localhost:8000/api/v1/wind/89101
     ```

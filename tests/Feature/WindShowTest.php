@@ -48,9 +48,18 @@ class WindShowTest extends TestCase
     /**
      * @test
      */
-    function cannot_retrieve_wind_data_with_invalid_zip_code()
+    function cannot_retrieve_wind_data_with_non_numeric_zip_code()
     {
         $this->json('GET', route('api.wind.show', ['zipCode' => 'abcde']))
+            ->assertStatus(404);
+    }
+
+    /**
+     * @test
+     */
+    function cannot_retrieve_wind_data_with_misformatted_zip_code()
+    {
+        $this->json('GET', route('api.wind.show', ['zipCode' => '1234']))
             ->assertStatus(404);
     }
 }
